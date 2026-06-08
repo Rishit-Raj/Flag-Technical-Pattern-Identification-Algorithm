@@ -1,20 +1,20 @@
-# Flag & Pennant Technical Pattern Identification Algorithm
+# Flag Technical Pattern Identification Algorithm
 
-A Python implementation that automatically detects **Bull Flag**, **Bear Flag**, **Bull Pennant**, and **Bear Pennant** chart formations from financial time series data. Two independent detection methods are provided — a **PIP-based** approach and a **trendline regression** approach — along with built-in backtesting analytics to measure post-pattern returns.
+A Python implementation that automatically detects **Bull Flag** and **Bear Flag** chart formations from financial time series data. Two independent detection methods are provided — a **PIP-based** approach and a **trendline regression** approach — along with built-in backtesting analytics to measure post-pattern returns.
 
 ---
 
-## What Are Flag & Pennant Patterns?
+## What Are Flag Patterns?
 
 Flag and pennant patterns are short-term continuation formations that appear after a strong, sharp price move (the **pole**), followed by a brief consolidation period (the **flag** or **pennant body**), and then a breakout resuming the original trend direction.
 
-### Bull Flag / Bull Pennant
+### Bull Flag
 - Appears after a sharp **upward** move (the pole)
 - Price consolidates in a **downward-sloping channel** (flag) or a **converging triangle** (pennant)
 - Confirmed when price breaks **above** the upper consolidation boundary
 - Signals continuation of the uptrend
 
-### Bear Flag / Bear Pennant
+### Bear Flag
 - Appears after a sharp **downward** move (the pole)
 - Price consolidates in an **upward-sloping channel** (flag) or a **converging triangle** (pennant)
 - Confirmed when price breaks **below** the lower consolidation boundary
