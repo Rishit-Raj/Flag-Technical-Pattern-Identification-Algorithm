@@ -4,26 +4,25 @@ A Python implementation that automatically detects **Bull Flag**, **Bear Flag**,
 
 ---
 
-## What Are Flag & Pennant Patterns?
+## What Are Flag Patterns?
 
-Flag and pennant patterns are short-term continuation formations that appear after a strong, sharp price move (the **pole**), followed by a brief consolidation period (the **flag** or **pennant body**), and then a breakout resuming the original trend direction.
+Flag patterns are short-term continuation formations that appear after a strong, sharp price move (the **pole**), followed by a brief consolidation period (the **flag** or **pennant body**), and then a breakout resuming the original trend direction.
 
-### Bull Flag / Bull Pennant
+### Bull Flag
 - Appears after a sharp **upward** move (the pole)
-- Price consolidates in a **downward-sloping channel** (flag) or a **converging triangle** (pennant)
+- Price consolidates in a **downward-sloping channel** (flag)
 - Confirmed when price breaks **above** the upper consolidation boundary
 - Signals continuation of the uptrend
 
-### Bear Flag / Bear Pennant
+### Bear Flag
 - Appears after a sharp **downward** move (the pole)
-- Price consolidates in an **upward-sloping channel** (flag) or a **converging triangle** (pennant)
+- Price consolidates in an **upward-sloping channel** (flag)
 - Confirmed when price breaks **below** the lower consolidation boundary
 - Signals continuation of the downtrend
 
 **Key geometric constraints applied in this implementation:**
 - Flag width must be less than 50% of the pole width
 - Flag height must be less than 50–75% of the pole height (method-dependent)
-- Pennants are distinguished from flags by converging (non-parallel) trendlines
 
 ---
 
@@ -39,10 +38,10 @@ trendline_automation.py    # Automated trendline fitting via slope optimization
 
 ## Detection Methods
 
-### 1. PIP-Based Detection (`find_flags_pennants_pips`)
+### 1. PIP-Based Detection (`find_flags_pips`)
 Uses **Perceptually Important Points (PIPs)** — a technique that iteratively selects the most structurally significant price points by maximizing perpendicular, vertical, or Euclidean distance from a connecting line. Five PIPs are extracted from the flag body and their geometric relationships (alternating peaks/troughs, slope signs, line intersection) are validated to confirm or reject each candidate pattern.
 
-### 2. Trendline Regression Detection (`find_flags_pennants_trendline`)
+### 2. Trendline Regression Detection (`find_flags_trendline`)
 Fits automated **support and resistance trendlines** to the flag body using least-squares regression as an initial estimate, then refines slopes via numerical optimization to ensure the lines are tangent to price extrema (i.e., no price bars violate the trendline). Pattern confirmation is triggered by a breakout of the upper (bull) or lower (bear) trendline.
 
 Both methods share the same `FlagPattern` dataclass for consistent output.
@@ -58,7 +57,6 @@ Each detected pattern is stored as a `FlagPattern` object with the following fie
 | `base_x / base_y` | Start of the pole (index and price) |
 | `tip_x / tip_y` | End of pole / start of flag body |
 | `conf_x / conf_y` | Breakout confirmation point |
-| `pennant` | `True` if pennant, `False` if flag |
 | `pole_width / pole_height` | Dimensions of the pole |
 | `flag_width / flag_height` | Dimensions of the consolidation body |
 | `support_slope / support_intercept` | Lower trendline of the flag |
@@ -68,9 +66,9 @@ Each detected pattern is stored as a `FlagPattern` object with the following fie
 
 ## Backtesting
 
-The main script includes a backtesting framework that measures **log returns** following each confirmed pattern. A `hold_mult` parameter controls the holding period as a multiple of the flag's width. Results are assembled into `pandas` DataFrames for each pattern type (`bull_flags`, `bear_flags`, `bull_pennants`, `bear_pennants`) capturing:
+The main script includes a backtesting framework that measures **log returns** following each confirmed pattern. A `hold_mult` parameter controls the holding period as a multiple of the flag's width. Results are assembled into `pandas` DataFrames for each pattern type (`bull_flags`, `bear_flags`) capturing:
 
-- Flag/pennant dimensions (width, height)
+- Flag dimensions (width, height)
 - Pole dimensions
 - Channel slope
 - Forward return over the holding period
