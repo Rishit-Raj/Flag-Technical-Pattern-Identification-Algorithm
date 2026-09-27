@@ -1,4 +1,4 @@
-# Flag & Pennant Technical Pattern Identification Algorithm
+# Flag Technical Pattern Identification Algorithm
 
 A Python implementation that automatically detects **Bull Flag**, **Bear Flag**, **Bull Pennant**, and **Bear Pennant** chart formations from financial time series data. Two independent detection methods are provided — a **PIP-based** approach and a **trendline regression** approach — along with built-in backtesting analytics to measure post-pattern returns.
 
