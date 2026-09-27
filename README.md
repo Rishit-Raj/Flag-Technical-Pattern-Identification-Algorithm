@@ -1,12 +1,12 @@
 # Flag Technical Pattern Identification Algorithm
 
-A Python implementation that automatically detects **Bull Flag**, **Bear Flag**, **Bull Pennant**, and **Bear Pennant** chart formations from financial time series data. Two independent detection methods are provided — a **PIP-based** approach and a **trendline regression** approach — along with built-in backtesting analytics to measure post-pattern returns.
+A Python implementation that automatically detects **Bull Flag** and **Bear Flag** chart formations from financial time series data. Two independent detection methods are provided — a **PIP-based** approach and a **trendline regression** approach — along with built-in backtesting analytics to measure post-pattern returns.
 
 ---
 
 ## What Are Flag Patterns?
 
-Flag patterns are short-term continuation formations that appear after a strong, sharp price move (the **pole**), followed by a brief consolidation period (the **flag** or **pennant body**), and then a breakout resuming the original trend direction.
+Flag patterns are short-term continuation formations that appear after a strong, sharp price move (the **pole**), followed by a brief consolidation period (the **flag body**), and then a breakout resuming the original trend direction.
 
 ### Bull Flag
 - Appears after a sharp **upward** move (the pole)
@@ -101,55 +101,12 @@ pip install pandas numpy matplotlib mplfinance
 
 ---
 
-## Usage
-
-```python
-import numpy as np
-import pandas as pd
-from flags import find_flags_pennants_trendline, find_flags_pennants_pips, plot_flag
-
-# Load OHLCV data
-data = pd.read_csv('BTCUSDT3600.csv')
-data['date'] = data['date'].astype('datetime64[s]')
-data = data.set_index('date')
-data = np.log(data)  # Log-transform for scale invariance
-
-close = data['close'].to_numpy()
-
-# Detect patterns (trendline method)
-bull_flags, bear_flags, bull_pennants, bear_pennants = find_flags_pennants_trendline(close, order=10)
-
-# Detect patterns (PIP method)
-# bull_flags, bear_flags, bull_pennants, bear_pennants = find_flags_pennants_pips(close, order=12)
-
-print(f"Bull Flags: {len(bull_flags)}")
-print(f"Bear Flags: {len(bear_flags)}")
-print(f"Bull Pennants: {len(bull_pennants)}")
-print(f"Bear Pennants: {len(bear_pennants)}")
-
-# Visualize a detected pattern
-if bull_flags:
-    plot_flag(data, bull_flags[0])
-```
-
----
-
 ## Notes
 
 - This project is for **educational purposes** and does **not constitute financial advice**.
 - Log-transforming price data before running detection is recommended for stationarity and scale invariance.
 - The `order` parameter controls rolling window sensitivity — larger values detect longer-term patterns with fewer false positives.
 - Works on any OHLCV time series; tested on BTC/USDT hourly and daily data.
-
----
-
-## Part of a Technical Analysis Suite
-
-This project is the third in a series of algorithmic technical pattern detectors:
-
-1. **Head & Shoulders** — bearish reversal detection
-2. **Inverse Head & Shoulders** — bullish reversal detection
-3. **Flag & Pennant** — bullish/bearish continuation detection (this repo)
 
 ---
 
